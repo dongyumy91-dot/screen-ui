@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import NavMenu from '@/layout/components/NavMenu.vue'
+import NavMenu from '@/layout/components/navMenu.vue'
 export default {
     name: 'LayoutAside',
     components: {
