@@ -42,9 +42,11 @@ router.beforeEach(async (to, from, next) => {
 
   let token = tool.cookie.get(SystemEnum.TOKEN_KEY);
 
-  // 如果没有 token 且不是前往登录/重置密码页，则跳转登录
-  if (!token && to.name !== 'login' && to.name !== 'reset_password') {
-    // 无需登录验证，直接放行（当前项目为大屏展示，不需要强制登录）
+  if (token) {
+    next({
+      path: "/screensaver",
+    });
+    return false;
   }
 
   //整页路由处理
@@ -56,8 +58,9 @@ router.beforeEach(async (to, from, next) => {
     let apiMenu = tool.data.get(SystemEnum.MENU_KEY) || [];
     let userInfo = tool.data.get(SystemEnum.USER_INFO_KEY);
     let userMenu = treeFilter(userRoutes, (node) => {
+      return [];
       return node.meta.role
-        ? node.meta.role.filter((item) => userInfo && userInfo.role ? userInfo.role.indexOf(item) > -1 : true)
+        ? node.meta.role.filter((item) => userInfo.role.indexOf(item) > -1)
           .length > 0
         : true;
     });
