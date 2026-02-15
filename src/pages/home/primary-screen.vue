@@ -18,39 +18,7 @@
           </div>
           <div class="panel-body">
             <!-- 菱形布局 -->
-            <div class="diamond-layout">
-              <div class="diamond-row">
-                <div class="diamond-item top">
-                  <div class="diamond-shape">
-                    <span>家庭市场</span>
-                  </div>
-                </div>
-              </div>
-              <div class="diamond-row middle">
-                <div class="diamond-item">
-                  <div class="diamond-shape side">
-                    <span>国际市场</span>
-                  </div>
-                </div>
-                <div class="diamond-item center">
-                  <div class="diamond-shape highlight">
-                    <span>网格融合支撑</span>
-                  </div>
-                </div>
-                <div class="diamond-item">
-                  <div class="diamond-shape side">
-                    <span>战客市场</span>
-                  </div>
-                </div>
-              </div>
-              <div class="diamond-row">
-                <div class="diamond-item bottom">
-                  <div class="diamond-shape">
-                    <span>商客市场</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <MarketDiamond @navigate="handleMarketNav" />
 
             <!-- 市场数据行 -->
             <div class="market-rows">
@@ -384,9 +352,11 @@
 
 <script>
 import * as echarts from "echarts";
+import MarketDiamond from "@/components/MarketDiamond.vue";
 
 export default {
   name: "PrimaryScreen",
+  components: { MarketDiamond },
   data() {
     return {
       totalDigits: ["1", "5", "2", "6", "8"],
@@ -403,6 +373,9 @@ export default {
     if (this.flowInstance) this.flowInstance.dispose();
   },
   methods: {
+    handleMarketNav(market) {
+      // 市场导航预留
+    },
     handleResize() {
       if (this.gaugeInstance) this.gaugeInstance.resize();
       if (this.flowInstance) this.flowInstance.resize();
@@ -642,53 +615,6 @@ export default {
 .big { font-size: 22px; font-weight: 700; }
 .sep { color: rgba(255,255,255,0.3); margin: 0 2px; }
 .unit { color: #5a8ab5; font-size: 12px; margin-left: 4px; }
-
-/* ===== 第一列：菱形布局 ===== */
-.diamond-layout {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 0;
-}
-.diamond-row {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  &.middle { gap: 6px; }
-}
-.diamond-item {
-  display: flex;
-  justify-content: center;
-}
-.diamond-shape {
-  width: 80px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 60, 120, 0.5);
-  border: 1px solid rgba(0, 180, 255, 0.3);
-  transform: perspective(200px) rotateX(10deg);
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  font-size: 10px;
-  color: #8ec8f8;
-  text-align: center;
-  &.highlight {
-    background: rgba(0, 100, 200, 0.4);
-    border-color: #0cf;
-    color: #0cf;
-    width: 90px;
-    height: 52px;
-    font-size: 10px;
-  }
-  &.side {
-    width: 74px;
-    height: 42px;
-    font-size: 10px;
-  }
-  span { z-index: 1; line-height: 1.2; }
-}
 
 /* 市场数据行 */
 .market-rows {
